@@ -1,6 +1,6 @@
 #!/bin/bash
 
-imageName="dbecker1/cs2110docker"
+imageName="gibrane/cs2110docker"
 
 docker -v >/dev/null
 
@@ -48,9 +48,9 @@ fi
 echo Starting up new CS 2110 Docker Container:
 
 if [ "$1" == "-it" ]; then
-	docker run --rm -p 6901:6901 -p 5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash dbecker1/cs2110docker
+	docker run --rm -p 6901:6901 -p 5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash gibrane/cs2110docker
 else 
-	docker run -d -p 6901:6901 -p 5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined dbecker1/cs2110docker 
+	docker run -d -p 6901:6901 -p 5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined gibrane/cs2110docker 
 
 	successfulRun=$?
 
