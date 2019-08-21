@@ -3,7 +3,7 @@
 FROM ubuntu:18.04
 
 MAINTAINER Gibran Essa "gibran@gatech.edu"
-ENV REFRESHED_AT 2018-10-30
+ENV REFRESHED_AT 2019-08-20
 ENV CS2110_IMAGE_VERSION 1.0.2
 
 ## Connection ports for controlling the UI:
