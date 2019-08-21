@@ -2,7 +2,7 @@
 
 FROM ubuntu:18.04
 
-MAINTAINER Daniel Becker "dbecker.fl@gmail.com"
+MAINTAINER Gibran Essa "gibran@gatech.edu"
 ENV REFRESHED_AT 2018-10-30
 ENV CS2110_IMAGE_VERSION 1.0.2
 
@@ -19,6 +19,7 @@ ENV HOME=/cs2110 \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     INST_SCRIPTS=/cs2110/install \
+    SRC_FILES=/cs2110/src \
     NO_VNC_HOME=/cs2110/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
@@ -30,6 +31,7 @@ WORKDIR $HOME
 ### Add all install scripts for further steps
 ADD ./src/install/base/ $INST_SCRIPTS/
 ADD ./src/install/tools/ $INST_SCRIPTS/
+ADD ./src/CircuitSim.jar $SRC_FILES/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
 ### Install some common tools
@@ -51,10 +53,12 @@ RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 ### Install gcc/gdb
 RUN $INST_SCRIPTS/cTools.sh
 
-
 ### Install complx and GBA
 RUN $INST_SCRIPTS/complxGba.sh
 ENV PATH=$PATH:/usr/games
+
+### Install circuitsim and java
+RUN $INST_SCRIPTS/circuitsimJava.sh
 
 USER 1000
 

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+
+Type=Application
+Name=CircuitSim
+GenericName=CircuitSim
+Comment=Circuit Simulator
+Categories=Development
+Exec=java -jar /cs2110/src/CircuitSim.jar
+
+Terminal=false
