@@ -60,6 +60,9 @@ ENV PATH=$PATH:/usr/games
 ### Install circuitsim and java
 RUN $INST_SCRIPTS/circuitsimJava.sh
 
+### add hosts.allow and hosts.deny (daniel becker is bad at security)
+ADD ./src/network/hosts.allow /etc/hosts.allow
+ADD ./src/network/hosts.deny /etc/hosts.deny
 USER 1000
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
