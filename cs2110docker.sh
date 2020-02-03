@@ -49,14 +49,16 @@ fi
 
 echo Starting up new CS 2110 Docker Container:
 
+ipAddress="$(docker-machine ip default 2>/dev/null)"
+
 if [ "$1" == "-it" ]; then
-	docker run --rm -p 127.0.0.1:6901:6901 -p 127.0.0.1:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash gibrane/cs2110docker
+	docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash gibrane/cs2110docker
 else 
-	docker run -d -p 127.0.0.1:6901:6901 -p 127.0.0.1:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined gibrane/cs2110docker 
+	docker run -d -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined gibrane/cs2110docker 
 
 	successfulRun=$?
 
-	ipAddress="$(docker-machine ip default 2>/dev/null)"
+	
 
 	foundIp=$?;
 
