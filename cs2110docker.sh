@@ -50,6 +50,11 @@ fi
 echo Starting up new CS 2110 Docker Container:
 
 ipAddress="$(docker-machine ip default 2>/dev/null)"
+foundIp=$?;
+
+if [ $foundIp != 0 ]; then
+	ipAddress="127.0.0.1";
+fi
 
 if [ "$1" == "-it" ]; then
 	docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash gibrane/cs2110docker
@@ -60,12 +65,7 @@ else
 
 	
 
-	foundIp=$?;
-
-	if [ $foundIp != 0 ]; then
-		ipAddress="localhost";
-	fi
-
+	
 	if [ $successfulRun == 0 ]; then
 		echo Successfully launched CS 2110 Docker container. Please go to http://$ipAddress:6901/vnc.html to access it.
 	else 
