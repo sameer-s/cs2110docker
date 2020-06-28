@@ -3,7 +3,7 @@
 FROM ubuntu:18.04
 
 MAINTAINER Gibran Essa "gibran@gatech.edu"
-ENV REFRESHED_AT 2019-08-20
+ENV REFRESHED_AT 2020-06-28
 ENV CS2110_IMAGE_VERSION 1.0.2
 
 ## Connection ports for controlling the UI:
@@ -29,14 +29,21 @@ ENV HOME=/cs2110 \
 WORKDIR $HOME
 
 ### Add all install scripts for further steps
+ADD ./src/patches $INST_SCRIPTS/patches
 ADD ./src/install/base/ $INST_SCRIPTS/
 ADD ./src/install/tools/ $INST_SCRIPTS/
 ADD ./src/CircuitSim.jar $SRC_FILES/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
+### Apply any necessary patches
+RUN $INST_SCRIPTS/patches/apply_patches.sh
+
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+### Install man pages
+RUN $INST_SCRIPTS/man_pages.sh
 
 ### Install xvnc-server, noVNC, and xfce
 RUN $INST_SCRIPTS/tigervnc.sh
