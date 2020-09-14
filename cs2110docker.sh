@@ -54,10 +54,13 @@ if [ $foundIp != 0 ]; then
   ipAddress="127.0.0.1"
 fi
 
+# -W should correct path incompatibilites on Windows for Docker Desktop users
+currDir="$(pwd -W 2>/dev/null || pwd)"
+
 if [ "$1" = "-it" ]; then
-  docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash "$imageName"
+  docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash "$imageName"
 else
-  docker run -d -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$(pwd)":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined "$imageName"
+  docker run -d -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined "$imageName"
 
   successfulRun=$?
 
