@@ -1,6 +1,6 @@
 services:
   cs2110docker:
-    build: https://github.com/dbecker1/cs2110docker.git
-    ports: 
+    build: https://github.com/gt-cs2110/cs2110docker.git
+    ports:
       - 6901
       - 5901
