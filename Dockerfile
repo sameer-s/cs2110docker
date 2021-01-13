@@ -2,7 +2,7 @@
 
 FROM ubuntu:20.04
 
-MAINTAINER Gibran Essa "gibran@gatech.edu"
+MAINTAINER Nicole Prindle "nprindle@gatech.edu"
 ENV REFRESHED_AT 2020-06-28
 ENV CS2110_IMAGE_VERSION 1.0.2
 
