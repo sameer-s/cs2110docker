@@ -30,6 +30,7 @@ WORKDIR $HOME
 
 ### Add all install scripts for further steps
 ADD ./src/patches $INST_SCRIPTS/patches
+ADD ./src/install/pkgs $INST_SCRIPTS/pkgs
 ADD ./src/install/base/ $INST_SCRIPTS/
 ADD ./src/install/tools/ $INST_SCRIPTS/
 ADD ./src/CircuitSim.jar $SRC_FILES/
@@ -37,6 +38,9 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
 ### Apply any necessary patches
 RUN $INST_SCRIPTS/patches/apply_patches.sh
+
+### Direct dpkg installations
+RUN $INST_SCRIPTS/pkgs/install_dpkgs.sh
 
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh

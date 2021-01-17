@@ -7,8 +7,12 @@ apt-get update
 apt-get install -y software-properties-common
 add-apt-repository ppa:tricksterguy87/complx
 add-apt-repository ppa:tricksterguy87/nin10kit
-apt update
-apt install -y complx-tools nin10kit
+
+apt-get update
+
+apt-get install -y complx-tools nin10kit
+apt-get install -y gcc-arm-none-eabi gdb-multiarch mednafen
+
 # PDF viewer for documentation.
-apt install -y evince
-apt install -y gcc-arm-none-eabi gdb-multiarch mednafen
+apt-get install -y evince
+
