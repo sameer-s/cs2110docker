@@ -58,7 +58,7 @@ fi
 currDir="$(pwd -W 2>/dev/null || pwd)"
 
 if [ "$1" = "-it" ]; then
-  docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint /bin/bash "$imageName"
+  docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint //bin/bash "$imageName"
 else
   docker run -d -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined "$imageName"
 
