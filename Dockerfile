@@ -36,9 +36,6 @@ ADD ./src/install/tools/ $INST_SCRIPTS/
 ADD ./src/CircuitSim.jar $SRC_FILES/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
-### Apply any necessary patches
-RUN $INST_SCRIPTS/patches/apply_patches.sh
-
 ### Direct dpkg installations
 RUN $INST_SCRIPTS/pkgs/install_dpkgs.sh
 
@@ -56,11 +53,6 @@ RUN $INST_SCRIPTS/xfce_ui.sh
 
 ADD ./src/config/xfce/ $HOME/
 
-### configure startup
-RUN $INST_SCRIPTS/libnss_wrapper.sh
-ADD ./src/scripts $STARTUPDIR
-RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
-
 ### Install gcc/gdb
 RUN $INST_SCRIPTS/cTools.sh
 
@@ -70,6 +62,14 @@ ENV PATH=$PATH:/usr/games
 
 ### Install circuitsim and java
 RUN $INST_SCRIPTS/circuitsimJava.sh
+
+### configure startup
+RUN $INST_SCRIPTS/libnss_wrapper.sh
+ADD ./src/scripts $STARTUPDIR
+RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+### Apply any necessary patches
+RUN $INST_SCRIPTS/patches/apply_patches.sh
 
 USER 1000
 
