@@ -36,9 +36,6 @@ ADD ./src/install/tools/ $INST_SCRIPTS/
 ADD ./src/CircuitSim.jar $SRC_FILES/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
-### Direct dpkg installations
-RUN $INST_SCRIPTS/pkgs/install_dpkgs.sh
-
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
