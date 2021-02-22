@@ -14,4 +14,5 @@ apt-get update && apt-get install -y xserver-xorg-video-dummy
 apt-get install -y java-common libgl1-mesa-glx
 wget -P $INST_SCRIPTS/pkgs https://cdn.azul.com/zulu/bin/zulu8.52.0.23-ca-fx-jdk8.0.282-linux_amd64.deb
 dpkg -i $INST_SCRIPTS/pkgs/zulu8.52.0.23-ca-fx-jdk8.0.282-linux_amd64.deb
+rm $INST_SCRIPTS/pkgs/zulu8.52.0.23-ca-fx-jdk8.0.282-linux_amd64.deb
 
