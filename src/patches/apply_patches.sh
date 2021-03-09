@@ -4,7 +4,7 @@ set -e
 set -u
 
 apt-get update
-apt-get install -y patch
+apt-get install --no-install-recommends -y patch
 apt-get clean -y
 
 # Don't exclude man pages
