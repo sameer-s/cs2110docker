@@ -66,6 +66,8 @@ ADD ./src/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
 ### Apply any necessary patches
+# TODO: this fixes man pages not being installed; this should be moved earlier,
+# but we only really need a subset of manpages
 RUN $INST_SCRIPTS/patches/apply_patches.sh
 
 USER 1000
