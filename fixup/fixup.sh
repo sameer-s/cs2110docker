@@ -22,3 +22,8 @@ dpkg-divert --quiet --remove --rename /usr/bin/man
 # Get a better pager
 apt-get install -y less
 
+# Install the complx with the patched views
+apt-get update
+add-apt-repository ppa:tricksterguy87/complx
+apt-get install -y complx-tools nin10kit
+
