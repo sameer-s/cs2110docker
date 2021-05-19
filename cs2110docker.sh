@@ -1,20 +1,74 @@
 #!/bin/bash
 
-imageName="gtcs2110/cs2110docker"
+define() { IFS=$'\n' read -r -d '' "${1}" || true; }
 
-docker -v >/dev/null
+description="Run the CS 2110 Docker container"
 
-dockerExists=$?
+usage_text=""
+define usage_text <<'EOF'
+USAGE:
+    ./cs2110docker.sh [start|stop|-it|-h|--help]
 
-if  [ $dockerExists != 0 ]; then
-  >&2 echo "ERROR: Please install Docker before running this script. Refer to the CS 2110 Docker Guide."
+OPTIONS:
+    start
+            Start a new (graphical) container in the background. This is the default if no options
+            are provided.
+    stop
+            Stop and remove any running instances of the container.
+    -it
+            Start a (non-graphical) interactive shell in a new container.
+    -h, --help
+            Show this help text.
+EOF
+
+print_help() {
+  >&2 echo -e "$description\n\n$usage_text"
+}
+
+print_usage() {
+  >&2 echo "$usage_text"
+}
+
+action=""
+if [ $# -eq 0 ]; then
+  action="start"
+elif [ $# -eq 1 ]; then
+  case "$1" in
+    start)
+      action="start"
+      ;;
+    stop)
+      action="stop"
+      ;;
+    -it)
+      action="-it"
+      ;;
+    -h|--help)
+      print_help
+      exit 0
+      ;;
+    *)
+      >&2 echo "Error: unrecognized argument: $1"
+      >&2 echo ""
+      print_usage
+      exit 1
+      ;;
+  esac
+elif [ $# -gt 1 ]; then
+  >&2 echo "Error: too many arguments"
+  >&2 echo ""
+  print_usage
   exit 1
 fi
 
-docker container ls >/dev/null
-dockerNotRunning=$?
+imageName="gtcs2110/cs2110docker"
 
-if [ $dockerNotRunning != 0 ]; then
+if ! docker -v >/dev/null; then
+  >&2 echo "ERROR: Docker not found. Please install Docker before running this script. Refer to the CS 2110 Docker Guide."
+  exit 1
+fi
+
+if ! docker container ls >/dev/null; then
   >&2 echo "ERROR: Docker is not currently running. Please start Docker before running this script."
   exit 1
 fi
@@ -31,26 +85,20 @@ else
   echo "No existing CS 2110 containers."
 fi
 
-if [ -n "$1" ] && [ "$1" = "stop" ]; then
+if [ "$action" = "stop" ]; then
   echo "Successfully stopped CS 2110 containers"
-  exit
+  exit 0
 fi
 
-echo Pulling down most recent image of $imageName
-docker pull $imageName
+echo "Pulling down most recent image of $imageName"
 
-successfulPull=$?
-
-if [ $successfulPull != 0 ]; then
+if ! docker pull $imageName; then
   >&2 echo "ERROR: Unable to pull down the most recent image of $imageName"
 fi
 
 echo "Starting up new CS 2110 Docker Container:"
 
-ipAddress="$(docker-machine ip default 2>/dev/null)"
-foundIp=$?
-
-if [ $foundIp != 0 ]; then
+if ! ipAddress="$(docker-machine ip default 2>/dev/null)"; then
   ipAddress="127.0.0.1"
 fi
 
@@ -64,9 +112,9 @@ else
   currDir="/$(pwd -W 2>/dev/null || pwd)"
 fi
 
-if [ "$1" = "-it" ]; then
+if [ "$action" = "-it" ]; then
   docker run --rm -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it  --entrypoint //bin/bash "$imageName"
-else
+elif [ "$action" = "start" ]; then
   docker run -d -p $ipAddress:6901:6901 -p $ipAddress:5901:5901 -v "$currDir":/cs2110/host/ --cap-add=SYS_PTRACE --security-opt seccomp=unconfined "$imageName"
 
   successfulRun=$?
