@@ -3,8 +3,8 @@
 FROM ubuntu:20.04
 
 MAINTAINER Nicole Prindle "nprindle@gatech.edu"
-ENV REFRESHED_AT 2020-06-28
-ENV CS2110_IMAGE_VERSION 1.1.0
+ENV REFRESHED_AT 2021-05-18
+ENV CS2110_IMAGE_VERSION 1.2.0
 
 ## Connection ports for controlling the UI:
 # VNC port:5901
@@ -36,6 +36,9 @@ ADD ./src/install/tools/ $INST_SCRIPTS/
 ADD ./src/CircuitSim.jar $SRC_FILES/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
+### Apply any necessary patches during pre-installation
+RUN $INST_SCRIPTS/patches/apply_preinstall_patches.sh
+
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
@@ -64,11 +67,6 @@ RUN $INST_SCRIPTS/circuitsimJava.sh
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
-
-### Apply any necessary patches
-# TODO: this fixes man pages not being installed; this should be moved earlier,
-# but we only really need a subset of manpages
-RUN $INST_SCRIPTS/patches/apply_patches.sh
 
 USER 1000
 
