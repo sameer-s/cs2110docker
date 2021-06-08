@@ -1,5 +1,9 @@
 #!/bin/bash
 
+release="stable"
+imageBaseName="gtcs2110/cs2110docker"
+imageName="${imageBaseName}:${release}"
+
 define() { IFS=$'\n' read -r -d '' "${1}" || true; }
 
 description="Run the CS 2110 Docker container"
@@ -61,8 +65,6 @@ elif [ $# -gt 1 ]; then
   exit 1
 fi
 
-imageName="gtcs2110/cs2110docker"
-
 if ! docker -v >/dev/null; then
   >&2 echo "ERROR: Docker not found. Please install Docker before running this script. Refer to the CS 2110 Docker Guide."
   exit 1
@@ -75,7 +77,7 @@ fi
 
 echo "Found Docker Installation. Checking for existing containers."
 
-existingContainers=$(docker ps -a | grep $imageName | awk '{print $1}')
+existingContainers=$(docker ps -a | grep $imageBaseName | awk '{print $1}')
 echo $existingContainers
 if [ -n "$existingContainers" ]; then
   echo "Found CS 2110 containers. Stopping and removing them."
