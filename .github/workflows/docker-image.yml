@@ -1,0 +1,15 @@
+name: Docker Image CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get the version
+      id: vars
+      # Get the branch/tag name, removing the "refs/heads/" or "refs/tags/" part
+      run: echo ::set-output name=tag::$(echo ${GITHUB_REF#*/*/})
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag gtcs2110/cs2110docker:${{steps.vars.outputs.tag}}
