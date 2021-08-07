@@ -20,11 +20,12 @@ rm $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64
 # MGBA emulator
 # Unfortunately apt-get install mgba-qt will get you a very outdated version
 # the deb packages are released directly on github
-apt-get install $INST_SCRIPTS/pkgs/libmgba_0.9.1-focal.deb
-apt-get install $INST_SCRIPTS/pkgs/mgba-qt_0.9.1-focal.deb
+apt-get install -y $INST_SCRIPTS/pkgs/libmgba_0.9.1-focal.deb
+apt-get install -y $INST_SCRIPTS/pkgs/mgba-qt_0.9.1-focal.deb
 rm $INST_SCRIPTS/pkgs/libmgba_0.9.1-focal.deb
 rm $INST_SCRIPTS/pkgs/mgba-qt_0.9.1-focal.deb
 
 # Necessary config to get mgba to not run super fast, custom button keymapping, and other niceties.
+mkdir -p $HOME/.config/mgba
 cp $INST_SCRIPTS/configs/mgba-config.ini $HOME/.config/mgba/config.ini
 
