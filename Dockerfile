@@ -36,9 +36,10 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 ### Apply any necessary patches during pre-installation
 RUN $INST_SCRIPTS/patches/apply_preinstall_patches.sh
 
-### Install some common tools
+### Install some common tools and applications
 RUN $INST_SCRIPTS/base/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+RUN $INST_SCRIPTS/base/apps.sh
 
 ### Install man pages
 RUN $INST_SCRIPTS/base/man_pages.sh

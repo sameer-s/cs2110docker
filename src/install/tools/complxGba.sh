@@ -17,6 +17,3 @@ apt-get install -y gcc-arm-none-eabi gdb-multiarch mednafen
 dpkg -i $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64.deb
 rm $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64.deb
 
-# PDF viewer for documentation.
-apt-get install -y evince
-
