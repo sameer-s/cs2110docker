@@ -66,7 +66,7 @@ RUN $INST_SCRIPTS/base/libnss_wrapper.sh
 ADD ./src/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/base/set_user_permission.sh $STARTUPDIR $HOME
 
-RUN useradd -NM -d "$HOME" -u 1000 user
+RUN useradd -NM -d "$HOME" -u 1000 user -s /bin/bash
 USER 1000
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
