@@ -10,11 +10,11 @@ add-apt-repository ppa:tricksterguy87/nin10kit
 
 apt-get update
 
-apt-get install -y complx-tools nin10kit
+apt-get install -y complx-tools
 apt-get install -y gcc-arm-none-eabi gdb-multiarch
 
 # GBA linker script; random oddities needed in the GBA Makefiles.
-dpkg -i $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64.deb
+dpkg --force-architecture -i $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64.deb
 rm $INST_SCRIPTS/pkgs/cs2110-gba-linker-script_1.1.2-0ubuntu1~ppa1~bionic1_amd64.deb
 
 # MGBA emulator

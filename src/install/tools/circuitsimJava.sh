@@ -11,8 +11,9 @@ apt-get update && apt-get install -y xserver-xorg-video-dummy
 # from a .deb now
 # OpenJDK + JFX (https://www.azul.com/downloads/zulu-community/)
 
-apt-get install -y java-common libgl1-mesa-glx
-wget -P $INST_SCRIPTS/pkgs https://cdn.azul.com/zulu/bin/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
-dpkg -i $INST_SCRIPTS/pkgs/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
-rm $INST_SCRIPTS/pkgs/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
+#apt-get install -y java-common libgl1-mesa-glx
+#wget -P $INST_SCRIPTS/pkgs https://cdn.azul.com/zulu/bin/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
+#dpkg -i $INST_SCRIPTS/pkgs/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
+#rm $INST_SCRIPTS/pkgs/zulu11.48.21-ca-fx-jdk11.0.11-linux_amd64.deb
 
+apt-get install -y libgl1-mesa-glx openjdk-17-jdk openjfx
